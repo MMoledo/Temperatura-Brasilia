@@ -15,7 +15,9 @@ file_layout = [
 # Layout da seleção de pasta
 
 layout = [[sg.Menu(menu_layout)],
-          [sg.Text('Selecione o seu filtro:')],
+          [sg.Text('Selecione o seu filtro:'),
+           sg.Combo(['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022']),
+           sg.Combo(['Temperatura', 'Umidade', 'Pressão', 'Velocidade do Vento'], key='-COLUNA-')]
           [sg.Radio('Anos 60', "filtro", default=True), 
            sg.Radio('Anos 70', "filtro", default=False), 
            sg.Radio('Anos 80', "filtro", default=False), 
