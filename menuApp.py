@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
 
+theme = sg.theme('DarkBrown7')
+
 # Define the menu layout
 menu_layout = [['File', ['Open', 'Save', 'Exit']],
                ['Edit', ['Cut', 'Copy', 'Paste']]]
