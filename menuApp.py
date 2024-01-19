@@ -1,4 +1,6 @@
 import PySimpleGUI as sg
+from PIL import Image, ImageTk #Image for open, ImageTk for display
+
 
 theme = sg.theme('DarkBrown7')
 
@@ -19,11 +21,12 @@ layout = [[sg.Menu(menu_layout)],
            sg.Radio('Anos 2000', "filtro", default=False), 
            sg.Radio('Anos 2010', "filtro", default=False),
            sg.Radio('Anos 2020', "filtro", default=False)],
-           [sg.Button('Filtrar', size=(10, 1))]
-]
-
-# Create the window
-window = sg.Window('Análise de Temperatura', layout)
+           [sg.Button('Filtrar', size=(10, 1))],
+           [sg.Image(key='-IMAGE-', visible=False)]
+        ]  # Add this line to display the image
+        # Create the window
+        
+window = sg.Window('Análise de Temperatura', layout, resizable=True)
 
 # Event loop
 while True:
@@ -41,4 +44,14 @@ while True:
                 print(folder)
                 file_window.close()
                 break
+    elif event == 'Filtrar':
+        print('Filtrando...')
+
+        image = Image.open("assets/img.png") #I prefer /
+        window['-IMAGE-'].update(
+            data = ImageTk.PhotoImage(image)
+        ) #update the myimg key
+
+        window['-IMAGE-'].update(visible=True) # Show the image
+
 window.close()
