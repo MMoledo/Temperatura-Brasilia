@@ -3,10 +3,10 @@ import PySimpleGUI as sg
 theme = sg.theme('DarkBrown7')
 
 # Define the menu layout
-menu_layout = [['File', ['Open', 'Exit']]]
+menu_layout = [['Arquivo', ['Abrir', 'Sair']]]
 
 file_layout = [
-    [sg.Text('Folder'), sg.In(size=(25,1), enable_events=True ,key='-FOLDER-'), sg.FolderBrowse()]
+    [sg.Text('Pasta'), sg.In(size=(25,1), enable_events=True ,key='-FOLDER-'), sg.FolderBrowse(button_text='Selecionar')]
 ]
 
 # Create the window layout
@@ -28,13 +28,13 @@ window = sg.Window('Análise de Temperatura', layout)
 # Event loop
 while True:
     event, values = window.read()
-    if event == sg.WINDOW_CLOSED or event == 'Exit':
+    if event == sg.WINDOW_CLOSED or event == 'Sair':
         break
-    elif event == 'Open':
+    elif event == 'Abrir':
         file_window = sg.Window('Selecionar Pasta', file_layout)
         while True:
             file_event, file_values = file_window.read()
-            if file_event == sg.WINDOW_CLOSED or file_event == 'Exit':
+            if file_event == sg.WINDOW_CLOSED or file_event == 'Sair':
                 break
             elif file_event == '-FOLDER-':
                 folder = file_values['-FOLDER-']
