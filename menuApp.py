@@ -3,15 +3,17 @@ from PIL import Image, ImageTk #Image for open, ImageTk for display
 
 
 theme = sg.theme('DarkBrown7')
+# Tema de cores e exibição dos menus
 
-# Define the menu layout
+
 menu_layout = [['Arquivo', ['Abrir', 'Sair']]]
+# Menu de opções superior
 
 file_layout = [
     [sg.Text('Pasta'), sg.In(size=(25,1), enable_events=True ,key='-FOLDER-'), sg.FolderBrowse(button_text='Selecionar')]
 ]
+# Layout da seleção de pasta
 
-# Create the window layout
 layout = [[sg.Menu(menu_layout)],
           [sg.Text('Selecione o seu filtro:')],
           [sg.Radio('Anos 60', "filtro", default=True), 
@@ -23,16 +25,19 @@ layout = [[sg.Menu(menu_layout)],
            sg.Radio('Anos 2020', "filtro", default=False)],
            [sg.Button('Filtrar', size=(10, 1))],
            [sg.Image(key='-IMAGE-', visible=False)]
-        ]  # Add this line to display the image
-        # Create the window
+]
+# Layout da janela principal
         
 window = sg.Window('Análise de Temperatura', layout, resizable=True)
+# Criação da janela principal
 
-# Event loop
 while True:
     event, values = window.read()
+
     if event == sg.WINDOW_CLOSED or event == 'Sair':
         break
+    # Encerra a exibição da janela principal
+
     elif event == 'Abrir':
         file_window = sg.Window('Selecionar Pasta', file_layout)
         while True:
@@ -44,14 +49,20 @@ while True:
                 print(folder)
                 file_window.close()
                 break
+    # Exibe a janela de seleção de pasta
+            
     elif event == 'Filtrar':
         print('Filtrando...')
 
-        image = Image.open("assets/img.png") #I prefer /
+        image = Image.open("assets/img.png")
+        # Cria o objeto de imagem
         window['-IMAGE-'].update(
             data = ImageTk.PhotoImage(image)
-        ) #update the myimg key
+        )
+        # Atribui o objeto ao elemento da janela
 
-        window['-IMAGE-'].update(visible=True) # Show the image
+        window['-IMAGE-'].update(visible=True)
+        # Altera o critério de visibilidade da imagem
+    # Exibe a imagem respectiva ao filtro selecionado
 
 window.close()
