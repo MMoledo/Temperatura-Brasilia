@@ -23,3 +23,39 @@ df_final.sort_values(by='Data', inplace=True)
 # Salva o DataFrame em um novo arquivo CSV
 caminho_novo_arquivo = os.path.join(pasta_csv, 'Temperatura_brasilia_2000_2022.csv')
 df_final.to_csv(caminho_novo_arquivo, index=False)
+
+
+codigo utilizado para alterar o tipo de algumas colunas para float e salvar em um novo csv
+
+# Lista dos anos de 2002 a 2022
+anos = list(range(2002, 2023))
+
+for ano in anos:
+    # Nome do arquivo CSV para o ano atual
+    nome_arquivo = f'DATA_{ano}.CSV'
+    
+    # Caminho completo para o arquivo CSV
+    caminho_arquivo = os.path.join(pasta_csv, nome_arquivo)
+    
+    # Verifica se o arquivo existe antes de realizar as operações
+    if os.path.exists(caminho_arquivo):
+        # Lê o CSV
+        df_temp_brasilia = pd.read_csv(caminho_arquivo, header=0, sep=';')
+        
+        # Lista das colunas que você deseja converter para float
+        colunas_float = ['Temperatura Maxima', 'Temperatura Minima', 'Vento Velocidade']
+        
+        # Convertendo as colunas para o tipo float
+        df_temp_brasilia[colunas_float] = df_temp_brasilia[colunas_float].replace({',': '.'}, regex=True).astype(float)
+        
+        # Convertendo a coluna 'Data' para o formato de data
+        df_temp_brasilia['Data'] = pd.to_datetime(df_temp_brasilia['Data'])
+        
+        # Salva o DataFrame em um novo arquivo CSV com ponto e vírgula como delimitador
+        novo_nome_arquivo = f'DATA_{ano}.CSV'
+        caminho_novo_arquivo = os.path.join(pasta_csv, novo_nome_arquivo)
+        df_temp_brasilia.to_csv(caminho_novo_arquivo, index=False, sep=';')
+
+        print(f'Operações concluídas para {nome_arquivo}. Arquivo convertido salvo como {novo_nome_arquivo}')
+    else:
+        print(f'O arquivo {nome_arquivo} não foi encontrado.')
