@@ -49,7 +49,7 @@ while True:
     # Exibe a janela de seleção de pasta
             
     elif event == 'Filtrar':
-        filterApp.filtrar(caminhoPasta, values['-ANO-'], values['-COLUNA-'])
+        ###filterApp.filtrar(caminhoPasta, values['-ANO-'], values['-COLUNA-'])
         # Chama a função de filtragem
 
         image = Image.open("assets/img.png")
