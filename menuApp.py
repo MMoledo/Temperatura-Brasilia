@@ -20,17 +20,12 @@ menu_layout = [['Arquivo', ['Abrir', 'Sair']]]
 def file_layout():
     layout = [[sg.Text('Pasta'), sg.In(size=(25,1), enable_events=True ,key='-FOLDER-'), sg.FolderBrowse(button_text='Selecionar')]]
     return sg.Window('Seleção de Pastas', layout)
-'''
-file_layout = [
-    [sg.Text('Pasta'), sg.In(size=(25,1), enable_events=True ,key='-FOLDER-'), sg.FolderBrowse(button_text='Selecionar')]
-]
-'''
-# Layout da seleção de pasta
+# Layout da janela de seleção de pasta
 
 layout = [[sg.Menu(menu_layout)],
           [sg.Text('Selecione o seu filtro:'),
-           sg.Combo(['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-'),
-           sg.Combo(['Temperatura Exata', 'Temperatura Máxima', 'Temperatura Mínima', 'Umidade do Ar', 'Velocidade do Vento'], key='-COLUNA-', default_value='Temperatura Exata')],
+           sg.Combo(['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True),
+           sg.Combo(['Temperatura Exata', 'Temperatura Máxima', 'Temperatura Mínima', 'Umidade do Ar', 'Velocidade do Vento'], key='-COLUNA-', default_value='Temperatura Exata', readonly=True)],
            [sg.Button('Filtrar', size=(10, 1))],
            [sg.Image(key='-IMAGE-', visible=False)]
 ]
@@ -76,10 +71,18 @@ while True:
         if caminhoPasta == '':
             sg.popup_error('Selecione uma pasta válida.') 
             continue 
-
-        ###filterApp.filtrar(caminhoPasta, values['-ANO-'], values['-COLUNA-'])
+        '''
+        match values['-COLUNA-']:
+            case 'Temperatura Exata':
+                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
+            case 'Temperatura Máxima':
+                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Maxima')
+            case 'Temperatura Mínima':
+                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Minima')
+            case 'Velocidade do Vento':
+                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
         # Chama a função de filtragem
-
+        '''
         image = Image.open("assets/img.png")
         # Cria o objeto de imagem
         window['-IMAGE-'].update(
