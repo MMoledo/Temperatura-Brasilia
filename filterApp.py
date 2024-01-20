@@ -12,7 +12,7 @@ def filtrar(caminhoPasta, ano, coluna):
     
     match coluna:
         case 'Temperatura':
-            df = tempMedia(base)
+            df = tempExat(base)
         case 'Temperatura Maxima':
             df = tempMax(base)
         case 'Temperatura Minima':
