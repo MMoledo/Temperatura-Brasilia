@@ -1,10 +1,12 @@
 import PySimpleGUI as sg
-from PIL import Image, ImageTk #Image for open, ImageTk for display
-
+# Lib pra fazer o menu visível
+from PIL import Image, ImageTk 
+#Image para criar um objeto de imagem, ImageTk para exibir
+import filterApp
+# Função que aplica a filtragem
 
 theme = sg.theme('DarkBrown7')
 # Tema de cores e exibição dos menus
-
 
 menu_layout = [['Arquivo', ['Abrir', 'Sair']]]
 # Menu de opções superior
@@ -17,14 +19,7 @@ file_layout = [
 layout = [[sg.Menu(menu_layout)],
           [sg.Text('Selecione o seu filtro:'),
            sg.Combo(['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-'),
-           sg.Combo(['Temperatura', 'Umidade', 'Pressão', 'Velocidade do Vento'], key='-COLUNA-')],
-          [sg.Radio('Anos 60', "filtro", default=True), 
-           sg.Radio('Anos 70', "filtro", default=False), 
-           sg.Radio('Anos 80', "filtro", default=False), 
-           sg.Radio('Anos 90', "filtro", default=False), 
-           sg.Radio('Anos 2000', "filtro", default=False), 
-           sg.Radio('Anos 2010', "filtro", default=False),
-           sg.Radio('Anos 2020', "filtro", default=False)],
+           sg.Combo(['Temperatura Média', 'Temperatura Máxima', 'Temperatura Mínima', 'Umidade do Ar', 'Velocidade do Vento'], key='-COLUNA-')],
            [sg.Button('Filtrar', size=(10, 1))],
            [sg.Image(key='-IMAGE-', visible=False)]
 ]
@@ -44,17 +39,18 @@ while True:
         file_window = sg.Window('Selecionar Pasta', file_layout)
         while True:
             file_event, file_values = file_window.read()
-            if file_event == sg.WINDOW_CLOSED or file_event == 'Sair':
+            if file_event == sg.WINDOW_CLOSED:
                 break
             elif file_event == '-FOLDER-':
-                folder = file_values['-FOLDER-']
-                print(folder)
+                caminhoPasta = file_values['-FOLDER-']
                 file_window.close()
-                break
+                file_window = None
+            break
     # Exibe a janela de seleção de pasta
             
     elif event == 'Filtrar':
-        print('Filtrando...')
+        filterApp.filtrar(caminhoPasta, values['-ANO-'], values['-COLUNA-'])
+        # Chama a função de filtragem
 
         image = Image.open("assets/img.png")
         # Cria o objeto de imagem
