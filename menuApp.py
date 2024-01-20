@@ -4,6 +4,8 @@ from PIL import Image, ImageTk
 #Image para criar um objeto de imagem, ImageTk para exibir
 import filterApp
 # Função que aplica a filtragem
+import os
+# Lib para manipulação de arquivos
 
 theme = sg.theme('DarkBrown7')
 # Tema de cores e exibição dos menus
@@ -43,12 +45,22 @@ while True:
                 break
             elif file_event == '-FOLDER-':
                 caminhoPasta = file_values['-FOLDER-']
-                file_window.close()
-                file_window = None
+                if os.path.isdir(caminhoPasta):
+                    arquivos = [arquivo for arquivo in os.listdir(caminhoPasta) if (arquivo.endswith('.csv') or arquivo.endswith('.CSV'))]
+                    if arquivos:
+                        file_window.close()
+                        file_window = None
+                    else:
+                        sg.popup_error('Nenhum arquivo .csv encontrado na pasta selecionada.')
+                else:
+                    sg.popup_error('Caminho de pasta inválido.')
             break
     # Exibe a janela de seleção de pasta
             
     elif event == 'Filtrar':
+        if values['-PASTA-'] == '':
+            sg.popup_error('Selecione uma pasta válida.')  
+
         ###filterApp.filtrar(caminhoPasta, values['-ANO-'], values['-COLUNA-'])
         # Chama a função de filtragem
 
