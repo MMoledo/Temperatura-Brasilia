@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 # Lib pra fazer o menu visível
 from PIL import Image, ImageTk 
 #Image para criar um objeto de imagem, ImageTk para exibir
-import filterApp
+import filtroApp
 # Função que aplica a filtragem
 import os
 # Lib para manipulação de arquivos
@@ -75,20 +75,20 @@ while True:
         
         match values['-COLUNA-']:
             case 'Temperatura Exata':
-                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
+                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
             case 'Temperatura Máxima':
-                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Maxima')
+                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Maxima')
             case 'Temperatura Mínima':
-                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Minima')
+                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Minima')
             case 'Velocidade do Vento':
-                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
+                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
         # Chama a função de filtragem
         
         if req == 0:
             sg.popup_error('Erro ao filtrar.')
             continue
         # Verifica se ocorreu algum erro na filtragem
-        
+
         image = Image.open("assets/img.png")
         # Cria o objeto de imagem
         window['-IMAGE-'].update(
