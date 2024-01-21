@@ -75,14 +75,19 @@ while True:
         
         match values['-COLUNA-']:
             case 'Temperatura Exata':
-                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
+                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
             case 'Temperatura Máxima':
-                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Maxima')
+                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Maxima')
             case 'Temperatura Mínima':
-                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Minima')
+                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Minima')
             case 'Velocidade do Vento':
-                filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
+                req = filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
         # Chama a função de filtragem
+        
+        if req == 0:
+            sg.popup_error('Erro ao filtrar.')
+            continue
+        # Verifica se ocorreu algum erro na filtragem
         
         image = Image.open("assets/img.png")
         # Cria o objeto de imagem
