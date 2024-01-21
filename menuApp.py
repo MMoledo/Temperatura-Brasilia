@@ -82,6 +82,8 @@ while True:
                 req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Minima')
             case 'Velocidade do Vento':
                 req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
+            case 'Umidade do Ar':
+                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Umidade do Ar')
         # Chama a função de filtragem
         
         if req == 0:

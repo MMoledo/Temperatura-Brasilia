@@ -12,13 +12,5 @@ def filtrar(caminhoPasta, ano, coluna):
     df = func.meanDf(df, ano, coluna)
     # Cria o dataframe com a média dos valores
 
-    if df is not None and func.mkImg(df, ano, coluna) != 0:
-        plt.close()
-        plt.clf()
-        plt.cla()
-        # Limpa a memória da imagem
-
-        return 1
-    else:
-        return 0
+    return 1 if df is not None and func.mkImg(df, ano, coluna) != 0 else 0
         # Retorna 0 caso ocorra algum erro

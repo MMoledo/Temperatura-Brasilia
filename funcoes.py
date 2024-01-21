@@ -62,6 +62,9 @@ def mkImg(df, ano, coluna):
             return 0
         else:
             plt.close()
+            plt.clf()
+            plt.cla()
+            # Limpa a memória da imagem
             return 1
 
 
