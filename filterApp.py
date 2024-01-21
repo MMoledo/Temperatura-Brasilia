@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-# import Functions.ipynb as func
+import funcoes as func
 
 def filtrar(caminhoPasta, ano, coluna):
     base = caminhoPasta + 'DATA_' + ano + '.CSV'
