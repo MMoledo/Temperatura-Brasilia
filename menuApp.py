@@ -71,7 +71,8 @@ while True:
         if caminhoPasta == '':
             sg.popup_error('Selecione uma pasta válida.') 
             continue 
-        '''
+        # Verifica se o caminho da pasta foi selecionado
+        
         match values['-COLUNA-']:
             case 'Temperatura Exata':
                 filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
@@ -82,7 +83,7 @@ while True:
             case 'Velocidade do Vento':
                 filterApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
         # Chama a função de filtragem
-        '''
+        
         image = Image.open("assets/img.png")
         # Cria o objeto de imagem
         window['-IMAGE-'].update(
