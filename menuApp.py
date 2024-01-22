@@ -6,8 +6,9 @@ import filtroApp
 # Função que aplica a filtragem
 import os
 # Lib para manipulação de arquivos
+import time
 
-theme = sg.theme('DarkBrown7')
+theme = sg.theme('LightBrown6')
 # Tema de cores e exibição dos menus
 
 caminhoPasta = ''
@@ -19,8 +20,10 @@ menu_layout = [['Arquivo', ['Abrir', 'Sair']]]
 
 layout = [[sg.Menu(menu_layout)],
           [sg.Text('Selecione o seu filtro:'),
-           sg.Combo(['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True)],
-           [sg.Button('Filtrar', size=(10, 1))],
+           sg.Combo(['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True),
+           sg.Combo(['Temperatura', 'Temperatura Minima', 'Temperatura Maxima', 'Umidade do Ar', 'Velocidade do Vento', ' Precipitacao', 'Radiacao'], default_value='Temperatura', key='-COLUNA-', readonly=True),
+           sg.Button('Filtrar', size=(10, 1)),
+           sg.ProgressBar(100, orientation='h', expand_x=True, size=(20, 20), visible=False, key='-PROGRESS-')],
            [sg.Image(key='-IMAGE-', visible=False, expand_x=True, expand_y=True, size=(100,100))],
 ]
 # Layout da janela principal
@@ -46,11 +49,19 @@ while True:
             continue 
         # Verifica se o caminho da pasta foi selecionado
 
+        window['-PROGRESS-'].update(visible=True)
+        # Altera o critério de visibilidade da barra de progresso
+
+        for x in range(100):
+            time.sleep(0.01)
+            window['-PROGRESS-'].update_bar(x + 1)
+        # Simula o progresso da filtragem
+
         try:
-            image = Image.open(f"{caminhoPasta}/assets/{values['-ANO-']}_temperatura.png")
+            image = Image.open(f"{caminhoPasta}/assets/{values['-ANO-']}_{values['-COLUNA-']}.png")
             # Cria o objeto de imagem
         except:
-            req = filtroApp.filtrar(f'{caminhoPasta}/Data/', values['-ANO-'], 'Temperatura')
+            req = filtroApp.filtrar(f'{caminhoPasta}/Data/', values['-ANO-'], values['-COLUNA-'])
             # Chama a função de filtragem
             
             if req == 0:
