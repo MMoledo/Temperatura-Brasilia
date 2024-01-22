@@ -25,7 +25,7 @@ from plotly.subplots import make_subplots
 
 
 # In[4]:
-
+'''
 
 # Obtém o caminho do diretório atual
 diretorio_atual = os.getcwd()
@@ -71,7 +71,6 @@ for idx in range(len(lista_dataframes)):
 
 # In[6]:
 
-
 lista_dataframes[0]
 
 
@@ -86,12 +85,15 @@ lista_dataframes[0].info()
 
 lista_dataframes[0]['Temperatura Maxima'].unique()
 
-
+'''
 # In[49]:
 
 
-def criar_grafico_media_diaria(df,namearq):
-    
+def criar_grafico_media_diaria(caminhoPasta, ano, coluna):
+    df = pd.read_csv(f'{caminhoPasta}/Data/DATA_{ano}.CSV', sep=';')
+    # Tenta ler o arquivo .csv
+    df['Data'] = pd.to_datetime(df['Data'])
+
     # Selecione o intervalo de datas do seu DataFrame
     data_inicio = df['Data'].min()
     data_fim = df['Data'].max()
@@ -100,7 +102,7 @@ def criar_grafico_media_diaria(df,namearq):
     intervalo_datas = pd.date_range(start=data_inicio, end=data_fim, freq='MS')
 
     # Calcular a média da temperatura para cada dia
-    media_por_dia = df.groupby(df['Data'].dt.to_period('D'))['Temperatura'].mean().reset_index().round(1)
+    media_por_dia = df.groupby(df['Data'].dt.to_period('D'))[coluna].mean().reset_index().round(1)
 
     # Converter Period para str
     media_por_dia['Data'] = media_por_dia['Data'].dt.strftime('%Y-%m-%d')
@@ -110,12 +112,12 @@ def criar_grafico_media_diaria(df,namearq):
     fig.update_layout(width=1400, height=1000)
 
     # Adicionar trace de linha para a média por dia
-    fig.add_trace(go.Scatter(x=media_por_dia['Data'], y=media_por_dia['Temperatura'],
+    fig.add_trace(go.Scatter(x=media_por_dia['Data'], y=media_por_dia[coluna],
                              mode='lines+markers', 
                              name='Média por Dia',
                              marker=dict(color='blue', size=8),
                              hoverinfo='text+x+y',
-                             text='Média: ' + media_por_dia['Temperatura'].astype(str) + '°C',
+                             text='Média: ' + media_por_dia[coluna].astype(str) + '°C',
                              visible=True  # Inicialmente visível
                              ))
 
@@ -127,28 +129,28 @@ def criar_grafico_media_diaria(df,namearq):
         font_family='Arial',
         font_color='black',
         font_size=24,
-        title='Média Diária de Temperatura',
+        title=f'Média Diária de {coluna}',
         xaxis_title='Data',
-        yaxis_title='Temperatura (°C)',
+        yaxis_title=f'{coluna}',
     )
 
     # Salvar o gráfico em um arquivo HTML
     #pio.write_html(fig, file=namearq, include_plotlyjs='cdn', full_html=False)
 
     # Salvar a figura como um arquivo PNG em uma pasta específica
-    fig.write_image(os.path.join(diretorio_atual, 'assets', namearq + '.png'), format='png', width=1400, height=1000)
+    fig.write_image(os.path.join(f'{caminhoPasta}/assets/img.png'), format='png', width=1400, height=1000)
 
 
     # Exibir o gráfico interativo
-    pio.show(fig)
+    #pio.show(fig)
 
 
 # In[50]:
+'''
 
+criar_grafico_media_diaria(lista_dataframes, 'teste')
 
-criar_grafico_media_diaria(lista_dataframes[0], 'teste')
-
-
+'''
 # In[ ]:
 
 
