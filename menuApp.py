@@ -7,6 +7,7 @@ import filtroApp
 import os
 # Lib para manipulação de arquivos
 import time
+from grafico import criar_grafico_media_diaria
 
 theme = sg.theme('LightBrown6')
 # Tema de cores e exibição dos menus
@@ -53,12 +54,14 @@ while True:
         # Altera o critério de visibilidade da barra de progresso
 
         for x in range(100):
-            time.sleep(0.01)
+            time.sleep(0.001)
             window['-PROGRESS-'].update_bar(x + 1)
         # Simula o progresso da filtragem
 
         try:
-            image = Image.open(f"{caminhoPasta}/assets/{values['-ANO-']}_{values['-COLUNA-']}.png")
+            criar_grafico_media_diaria(caminhoPasta, values['-ANO-'], values['-COLUNA-'])
+            #image = Image.open(f"{caminhoPasta}/assets/{values['-ANO-']}_{values['-COLUNA-']}.png")
+            image = Image.open("assets/img.png")
             # Cria o objeto de imagem
         except:
             req = filtroApp.filtrar(f'{caminhoPasta}/Data/', values['-ANO-'], values['-COLUNA-'])
@@ -83,3 +86,4 @@ while True:
     # Exibe a imagem respectiva ao filtro selecionado
 
 window.close()
+
