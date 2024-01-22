@@ -24,7 +24,7 @@ def file_layout():
 
 layout = [[sg.Menu(menu_layout)],
           [sg.Text('Selecione o seu filtro:'),
-           sg.Combo(['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True)],
+           sg.Combo(['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True)],
            [sg.Button('Filtrar', size=(10, 1))],
            [sg.Image(key='-IMAGE-', visible=False)]
 ]
@@ -65,24 +65,29 @@ while True:
             sg.popup_error('Selecione uma pasta válida.') 
             continue 
         # Verifica se o caminho da pasta foi selecionado
-        
-        req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
-        # Chama a função de filtragem
-        
-        if req == 0:
-            sg.popup_error('Erro ao filtrar.')
-            continue
-        # Verifica se ocorreu algum erro na filtragem
 
-        image = Image.open("assets/img.png")
-        # Cria o objeto de imagem
-        window['-IMAGE-'].update(
-            data = ImageTk.PhotoImage(image)
-        )
-        # Atribui o objeto ao elemento da janela
+        try:
+            image = Image.open(f"assets/{values['-ANO-']}_temperatura.png")
+            # Cria o objeto de imagem
+        except:
+            req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
+            # Chama a função de filtragem
+            
+            if req == 0:
+                sg.popup_error('Erro ao filtrar.')
+                continue
+            # Verifica se ocorreu algum erro na filtragem
 
-        window['-IMAGE-'].update(visible=True)
-        # Altera o critério de visibilidade da imagem
+            image = Image.open("assets/img.png")
+            # Cria o objeto de imagem
+        finally:
+            window['-IMAGE-'].update(
+                data = ImageTk.PhotoImage(image)
+            )
+            # Atribui o objeto ao elemento da janela
+
+            window['-IMAGE-'].update(visible=True)
+            # Altera o critério de visibilidade da imagem
     # Exibe a imagem respectiva ao filtro selecionado
 
 window.close()
