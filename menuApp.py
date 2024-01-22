@@ -36,8 +36,9 @@ while True:
     # Encerra a exibição da janela principal
 
     elif event == 'Abrir':
+        caminhoPasta = ''
         while not os.path.isdir(caminhoPasta):
-            caminhoPasta = sg.popup_get_folder('Selecione a pasta com os arquivos .csv', default_path=os.getcwd())
+            caminhoPasta = sg.popup_get_folder('Selecione a pasta com os arquivos', default_path=os.getcwd())
             
     elif event == 'Filtrar':
         if caminhoPasta == '':
@@ -60,7 +61,7 @@ while True:
             image = Image.open("assets/img.png")
             # Cria o objeto de imagem
         finally:
-            image = image.resize((700,500),Image.ANTIALIAS)
+            image = image.resize((1120,580),Image.ANTIALIAS)
             window['-IMAGE-'].update(
                 data = ImageTk.PhotoImage(image)
             )
