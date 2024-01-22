@@ -19,7 +19,8 @@ menu_layout = [['Arquivo', ['Abrir', 'Sair']]]
 
 layout = [[sg.Menu(menu_layout)],
           [sg.Text('Selecione o seu filtro:'),
-           sg.Combo(['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True)],
+           sg.Combo(['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True),
+           sg.Combo(['Temperatura', 'Temperatura Minima', 'Temperatura Maxima', 'Umidade do Ar', 'Velocidade do Vento', ' Precipitacao', 'Radiacao'], default_value='Temperatura', key='-COLUNA-', readonly=True)],
            [sg.Button('Filtrar', size=(10, 1))],
            [sg.Image(key='-IMAGE-', visible=False, expand_x=True, expand_y=True, size=(100,100))],
 ]
@@ -47,10 +48,10 @@ while True:
         # Verifica se o caminho da pasta foi selecionado
 
         try:
-            image = Image.open(f"{caminhoPasta}/assets/{values['-ANO-']}_temperatura.png")
+            image = Image.open(f"{caminhoPasta}/assets/{values['-ANO-']}_{values['-COLUNA-']}.png")
             # Cria o objeto de imagem
         except:
-            req = filtroApp.filtrar(f'{caminhoPasta}/Data/', values['-ANO-'], 'Temperatura')
+            req = filtroApp.filtrar(f'{caminhoPasta}/Data/', values['-ANO-'], values['-COLUNA-'])
             # Chama a função de filtragem
             
             if req == 0:
