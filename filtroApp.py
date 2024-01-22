@@ -9,7 +9,7 @@ def filtrar(caminhoPasta, ano, coluna):
 
     df = pd.read_csv(base, sep=';')
 
-    df = func.meanDf(df, ano, coluna)
+    df = func.meanDf(df, coluna)
     # Cria o dataframe com a média dos valores
 
     return 1 if df is not None and func.mkImg(df, ano, coluna) != 0 else 0
