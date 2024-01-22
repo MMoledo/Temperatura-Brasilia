@@ -7,7 +7,7 @@ import filtroApp
 import os
 # Lib para manipulação de arquivos
 
-theme = sg.theme('DarkBrown7')
+theme = sg.theme('LightBrown6')
 # Tema de cores e exibição dos menus
 
 caminhoPasta = ''
