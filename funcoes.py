@@ -29,7 +29,7 @@ def listLines():
 # In[28]:
 
 
-def meanDf(df, ano, coluna):
+def meanDf(df, coluna):
     if not df.empty:
         df = df.groupby(['Data'])[coluna].mean().round(1)
         df = df.reset_index()
@@ -39,7 +39,7 @@ def meanDf(df, ano, coluna):
 # In[29]:
 
 
-def medianDf(df, ano, coluna):
+def medianDf(df, coluna):
     if not df.empty:
         df = df.groupby(['Data'])[coluna].median().round(1)
         df = df.reset_index()
