@@ -24,8 +24,7 @@ def file_layout():
 
 layout = [[sg.Menu(menu_layout)],
           [sg.Text('Selecione o seu filtro:'),
-           sg.Combo(['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True),
-           sg.Combo(['Temperatura Exata', 'Temperatura Máxima', 'Temperatura Mínima', 'Umidade do Ar', 'Velocidade do Vento'], key='-COLUNA-', default_value='Temperatura Exata', readonly=True)],
+           sg.Combo(['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'], default_value='2020', key='-ANO-', readonly=True)],
            [sg.Button('Filtrar', size=(10, 1))],
            [sg.Image(key='-IMAGE-', visible=False)]
 ]
@@ -54,14 +53,8 @@ while True:
                 caminhoPasta = file_values['-FOLDER-']
                 if os.path.isdir(caminhoPasta):
                 # Verifica se o caminho é válido
-                    arquivos = [arquivo for arquivo in os.listdir(caminhoPasta) if (arquivo.endswith('.csv') or arquivo.endswith('.CSV'))]
-                    # Lista os arquivos .csv da pasta selecionada
-                    if arquivos:
-                    # Verifica se os arquivos são válidos
-                        file_window.close()
-                        file_window = None
-                    else:
-                        sg.popup_error('Nenhum arquivo .csv encontrado na pasta selecionada.')
+                    file_window.close()
+                    file_window = None
                 else:
                     sg.popup_error('Caminho de pasta inválido.')
             break
@@ -73,17 +66,7 @@ while True:
             continue 
         # Verifica se o caminho da pasta foi selecionado
         
-        match values['-COLUNA-']:
-            case 'Temperatura Exata':
-                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
-            case 'Temperatura Máxima':
-                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Maxima')
-            case 'Temperatura Mínima':
-                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura Minima')
-            case 'Velocidade do Vento':
-                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Vento Velocidade')
-            case 'Umidade do Ar':
-                req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Umidade do Ar')
+        req = filtroApp.filtrar(caminhoPasta, values['-ANO-'], 'Temperatura')
         # Chama a função de filtragem
         
         if req == 0:
